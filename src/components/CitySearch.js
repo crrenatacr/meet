@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const CitySearch = ({ allLocations }) => {
+const CitySearch = ({ allLocations, setSelectedLocation }) => {
   // Defining state variables: query, suggestions, and showSuggestions
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [query, setQuery] = useState(""); // State for the input field value
@@ -31,14 +31,15 @@ const CitySearch = ({ allLocations }) => {
     const value = event.target.textContent; // Get the text of the clicked suggestion
     setQuery(value); // Set the query to the clicked suggestion
     setShowSuggestions(false); // Hide the suggestions list
+    setSelectedLocation(value === "See all cities" ? "all" : value);
   };
 
   return (
     <div id="city-search" data-testid="city-search">
-      {" "}
       {/* Added data-testid for testing */}
       {/* Input field for city search */}
       <input
+        id="city-search-input"
         type="text"
         className="city"
         placeholder="Search for a city"

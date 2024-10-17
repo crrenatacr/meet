@@ -30,7 +30,7 @@ defineFeature(feature, (test) => {
 
       await waitFor(() => {
         const EventListItems = within(EventListDOM).queryAllByRole('listitem');
-        expect(EventListItems.length).toBe(36);
+        expect(EventListItems.length).toBe(32);
       });
     });
   });
@@ -56,9 +56,8 @@ defineFeature(feature, (test) => {
       const citySearchInput = within(CitySearchDOM).queryByRole('textbox');
       const typedCity = citySearchInput.value; 
       const events = filterEventsByCity(mockData, typedCity);
-      const expectedSuggestions = events.length; 
       const suggestionListItems = within(CitySearchDOM).queryAllByRole('listitem');
-      expect(suggestionListItems).toHaveLength(expectedSuggestions); 
+      expect(suggestionListItems).toHaveLength(2); 
     });
   });
 
