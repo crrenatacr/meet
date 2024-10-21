@@ -6,7 +6,7 @@ import App from '../App'; // Import the App component for integration tests
 
 describe('<CitySearch /> component', () => {
   let allLocations; // Variable to hold all location names
-  setSelectedLocation = jest.fn();
+  const setSelectedLocation = jest.fn();
 
   beforeEach(() => {
     allLocations = ['Berlin', 'Paris', 'Madrid']; // Sample locations
