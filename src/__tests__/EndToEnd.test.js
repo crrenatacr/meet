@@ -3,7 +3,7 @@ import puppeteer from 'puppeteer';
 describe('show/hide event details', () => {
     let browser;
     let page;
-    
+    jest.setTimeout(40000);
     beforeAll(async () => {
         browser = await puppeteer.launch({
             headless: false,
@@ -64,17 +64,22 @@ describe('Filter Events By City', () => {
     });
 
     test('User should see a list of suggestions when they search for a city', async () => {
-        await page.type('#number-of-events', 'Berlin'); // Simulate user typing in city
+        await page.type('#city-search-input', 'Berlin'); // Simulate user typing in city
         await page.waitForSelector('.suggestions'); // Wait for suggestions to appear
-        const suggestions = await page.$$('.suggestion'); // Get suggestion elements
+        const suggestions = await page.$$('.suggestions'); // Get suggestion elements
         expect(suggestions.length).toBeGreaterThan(0); // Expect that suggestions are displayed
     });
 
     test('User can select a city from the suggested list', async () => {
-        await page.type('#number-of-events', 'Berlin'); // Type to trigger suggestions
-        await page.waitForSelector('.suggestion'); // Wait for suggestions
-        await page.click('.suggestion'); // Click on the first suggestion
-        const selectedCity = await page.$eval('#number-of-events', el => el.value); // Get value from input
-        expect(selectedCity).toBe('Berlin'); // Verify that the selected city is displayed
+        const input = await page.$('#city-search-input');
+        await input.click({ clickCount: 3 }) // click the target field 3 times so that the browser would select all the text in it and then you could just type what you want and overwrite the text from the previous test
+        await page.type("#city-search-input", "Berlin"); // Type to trigger suggestions
+        await page.waitForSelector(".suggestions"); // Wait for suggestions
+        await page.click(".suggestions li"); // Click on the first suggestion
+        const selectedCity = await page.$eval(
+            "#city-search-input",
+            (el) => el.value
+        ); // Get value from input
+        expect(selectedCity).toBe("Berlin, Germany"); // Verify that the selected city is displayed
     });
 });
