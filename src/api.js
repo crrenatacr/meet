@@ -24,7 +24,7 @@ export const getAccessToken = async () => {
     if (!code) {
       // Redirect to the auth URL if no code is found in the URL
       const response = await fetch(
-        'https://8ojt5ejoff.execute-api.eu-central-1.amazonaws.com/dev/api/get-auth-url' // Updated auth URL
+        'https://hm10k42h09.execute-api.eu-central-1.amazonaws.com/dev/api/get-auth-url' // Updated auth URL
       );
       const result = await response.json();
       const { authUrl } = result;
@@ -38,7 +38,7 @@ export const getAccessToken = async () => {
 // Function to verify the access token
 const checkToken = async (accessToken) => {
   const response = await fetch(
-    `https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=${accessToken}`
+    `https://hm10k42h09.execute-api.eu-central-1.amazonaws.com/dev/api/get-events/{access_token}`
   );
   const result = await response.json();
   return result; // Return the token validation result
@@ -60,7 +60,7 @@ export const getEvents = async () => {
 
   if (token) {
     removeQuery(); // Remove query from the URL
-    const url = `https://8ojt5ejoff.execute-api.eu-central-1.amazonaws.com/dev/api/get-events/${token}`; // Construct the API endpoint using template literals
+    const url = `https://hm10k42h09.execute-api.eu-central-1.amazonaws.com/dev/api/get-events/${token}`; // Construct the API endpoint using template literals
     const response = await fetch(url); // Fetch events from the API
     const result = await response.json(); // Parse the JSON response
     if (result) {
@@ -96,7 +96,7 @@ const removeQuery = () => {
 const getToken = async (code) => {
   const  encodeCode = encodeURIComponent(code);
   const response = await fetch(
-    `https://8ojt5ejoff.execute-api.eu-central-1.amazonaws.com/dev/api/token/${encodeCode}`,{
+    `https://hm10k42h09.execute-api.eu-central-1.amazonaws.com/dev/api/token/${encodeCode}`,{
       method:'GET',
       mode:'no-cors',
       headers:{
