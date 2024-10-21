@@ -2,7 +2,7 @@ service: auth-server
 
 provider:
   name: aws
-  runtime: nodejs18.x # Specifies the Node.js runtime version to use
+  runtime: nodejs20.x # Specifies the Node.js runtime version to use
   region: eu-central-1 # AWS region where the functions will be deployed
   timeout: 30 # Maximum time (in seconds) the function can run before timing out
   environment:
