@@ -1,10 +1,11 @@
+'use strict';
+
 // Importing Google APIs library
 const { google } = require("googleapis");
+const calendar = google.calendar("v3");
 
 // Scopes required to access public calendar events with read-only permission
-const SCOPES = [
-  "https://www.googleapis.com/auth/calendar.events.public.readonly",
-];
+const SCOPES = ["https://www.googleapis.com/auth/calendar.events.public.readonly"];
 
 // Extracting configuration variables from environment variables
 const { CLIENT_SECRET, CLIENT_ID, CALENDAR_ID } = process.env;
@@ -19,11 +20,15 @@ const oAuth2Client = new google.auth.OAuth2(
 
 // Function that generates the authentication URL for Google OAuth2
 module.exports.getAuthURL = async () => {
+  /**
+   *
+   * Scopes array is passed to the `scope` option. 
+   *
+   */
   // Generating the authentication URL with the required scope
   const authUrl = oAuth2Client.generateAuthUrl({
     access_type: "offline",
     scope: SCOPES,
-    prompt: 'consent'
   });
 
   // Returning the authentication URL in JSON format
@@ -43,13 +48,13 @@ module.exports.getAuthURL = async () => {
 module.exports.getAccessToken = async (event) => {
   // Decode the authorization code extracted from the URL query
   const code = decodeURIComponent(`${event.pathParameters.code}`);
-  console.log('cod#1: ', code);
+  
   return new Promise((resolve, reject) => {
     /**
      * Exchange the authorization code for an access token with a “callback” after the exchange.
      * The callback here is an arrow function with the results as parameters: “error” and “response”.
      */
-    console.log('code#2: ', code);
+    
     oAuth2Client.getToken(code, (error, response) => {
       if (error) {
         // Reject the promise if there is an error
@@ -63,7 +68,6 @@ module.exports.getAccessToken = async (event) => {
       // Respond with the OAuth token
       return {
         statusCode: 200,
-        mode:'no-cors',
         headers: {
           "Access-Control-Allow-Origin": "*", // Enabling CORS
           "Access-Control-Allow-Credentials": true,
@@ -75,9 +79,6 @@ module.exports.getAccessToken = async (event) => {
       // Handle errors if the promise is rejected
       return {
         statusCode: 500,
-        headers: {
-          "Access-Control-Allow-Origin": "*", // Enabling CORS
-        },
         body: JSON.stringify(error),
       };
     });
@@ -86,14 +87,14 @@ module.exports.getAccessToken = async (event) => {
 // Function that retrieves calendar events
 module.exports.getCalendarEvents = async (event) => {
   // Decode the access token extracted from the URL query
-  const access_token = decodeURIComponent(`${event.pathParameters.token}`);
+  const access_token = decodeURIComponent(`${event.pathParameters.access_token}`);
   
-  // Set the access token as credentials in the OAuth2 client
+  // Loads the user credentials and sets the access token as credentials in the OAuth2 client
   oAuth2Client.setCredentials({ access_token });
-
+ // Load the calendar
   return new Promise((resolve, reject) => {
     // List calendar events using the Google Calendar API
-    google.calendar("v3").events.list(
+    calendar.events.list(
       {
         calendarId: CALENDAR_ID, // The ID of the calendar to access
         auth: oAuth2Client, // OAuth2 client used for authentication
@@ -104,32 +105,28 @@ module.exports.getCalendarEvents = async (event) => {
       (error, response) => {
         if (error) {
           // Reject the promise if there is an error
-          reject(error);
-        } else {
-          // Resolve the promise with the response if successful
-          resolve(response);
+          return reject(error);
         }
-      }
+          // Resolve the promise with the response if successful
+          return resolve(response);
+        }
     );
   })
     .then((results) => {
-      // Respond with the list of events formatted for the Meet app
+      // Respond with with OAuth token and the list of events formatted for the Meet app
       return {
         statusCode: 200,
         headers: {
           "Access-Control-Allow-Origin": "*", // Enabling CORS
           "Access-Control-Allow-Credentials": true,
         },
-        body: JSON.stringify({ events: results.data.items }),
+        body: JSON.stringify(results.data.items),
       };
     })
     .catch((error) => {
       // Handle errors if the promise is rejected
       return {
         statusCode: 500,
-        headers: {
-          "Access-Control-Allow-Origin": "*", // Enabling CORS
-        },
         body: JSON.stringify(error),
       };
     });
