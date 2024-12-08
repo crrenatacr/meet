@@ -2,6 +2,7 @@
   "name": "meet",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://crrenatacr.github.io/meet",
   "dependencies": {
     "cra-template-pwa": "2.0.0",
     "react": "^19.0.0",
@@ -34,5 +35,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "gh-pages": "^6.2.0"
   }
 }
