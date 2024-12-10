@@ -24,7 +24,7 @@ export const getAccessToken = async () => {
     if (!code) {
       // Redirect to the auth URL if no code is found in the URL
       const response = await fetch(
-        'https://hm10k42h09.execute-api.eu-central-1.amazonaws.com/dev/api/get-auth-url' // Updated auth URL
+        'https://h6lktfu534.execute-api.eu-central-1.amazonaws.com/dev/api/get-auth-url' // Updated auth URL
       );
       const result = await response.json();
       const { authUrl } = result;
@@ -51,7 +51,7 @@ const checkToken = async (accessToken) => {
 export const getEvents = async () => {
   NProgress.start();
   // Check if running on localhost and return mock data
-  if (window.location.href.startsWith("http://localhost")) {
+  if (window.location.href.startsWith('http://localhost')) {
     NProgress.done();
     return mockData;
   }
@@ -60,11 +60,11 @@ export const getEvents = async () => {
 
   if (token) {
     removeQuery(); // Remove query from the URL
-    const url = `https://hm10k42h09.execute-api.eu-central-1.amazonaws.com/dev/api/get-events/${token}`; // Construct the API endpoint using template literals
+    const url =  "https://h6lktfu534.execute-api.eu-central-1.amazonaws.com/dev/api/get-events" + "/" + token; // Construct the API endpoint using template literals
     const response = await fetch(url); // Fetch events from the API
     const result = await response.json(); // Parse the JSON response
     if (result) {
-      return result.events; // Return events from the result
+      return result; // Return events from the result
     } else return null;
   }
 };
@@ -96,7 +96,7 @@ const removeQuery = () => {
 const getToken = async (code) => {
   const  encodeCode = encodeURIComponent(code);
   const response = await fetch(
-    `https://hm10k42h09.execute-api.eu-central-1.amazonaws.com/dev/api/token/${encodeCode}`,
+    `https://h6lktfu534.execute-api.eu-central-1.amazonaws.com/dev/api/token/${encodeCode}`,
     
   ); // Use template literals for URL
   console.log('response: ', response);
