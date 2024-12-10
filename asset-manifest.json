@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/meetbackup/static/css/main.ce4d0da9.css",
+    "main.js": "/meetbackup/static/js/main.d365719a.js",
+    "static/js/453.4a9980c6.chunk.js": "/meetbackup/static/js/453.4a9980c6.chunk.js",
+    "service-worker.js": "/meetbackup/service-worker.js",
+    "index.html": "/meetbackup/index.html",
+    "main.ce4d0da9.css.map": "/meetbackup/static/css/main.ce4d0da9.css.map",
+    "main.d365719a.js.map": "/meetbackup/static/js/main.d365719a.js.map",
+    "453.4a9980c6.chunk.js.map": "/meetbackup/static/js/453.4a9980c6.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.ce4d0da9.css",
+    "static/js/main.d365719a.js"
+  ]
+}
