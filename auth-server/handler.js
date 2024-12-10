@@ -73,6 +73,7 @@ module.exports.getAccessToken = async (event) => {
       };
     });
 };
+
 module.exports.getCalendarEvents = async (event) => {
   // Decode authorization code extracted from the URL query
   const access_token = decodeURIComponent(`${event.pathParameters.access_token}`);
