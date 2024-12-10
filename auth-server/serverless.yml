@@ -1,0 +1,33 @@
+service: auth-server
+
+provider:
+  name: aws
+  runtime: nodejs20.x # Specifies the Node.js runtime version to use
+  region: eu-central-1 # AWS region where the functions will be deployed
+  timeout: 30 # Maximum time (in seconds) the function can run before timing out
+  environment:
+    CLIENT_ID: ${file(config.json):CLIENT_ID} # Loads CLIENT_ID from config.json file
+    CLIENT_SECRET: ${file(config.json):CLIENT_SECRET} # Loads CLIENT_SECRET from config.json file
+    CALENDAR_ID: ${file(config.json):CALENDAR_ID} # Loads CALENDAR_ID from config.json file
+
+functions:
+  getAuthURL:
+    handler: handler.getAuthURL # Specifies the function handler in handler.js
+    events:
+      - http:
+          path: api/get-auth-url # HTTP path that triggers the function
+          method: get # HTTP method to trigger the function
+
+  getAccessToken:
+    handler: handler.getAccessToken # Specifies the function handler in handler.js
+    events:
+      - http:
+          path: api/token/{code} # HTTP path that includes a dynamic 'code' parameter
+          method: get # HTTP method to trigger the function
+
+  getCalendarEvents:
+    handler: handler.getCalendarEvents # Specifies the function handler in handler.js
+    events:
+      - http:
+          path: api/get-events/{access_token} # HTTP path that includes a dynamic 'access_token' parameter
+          method: get # HTTP method to trigger the function

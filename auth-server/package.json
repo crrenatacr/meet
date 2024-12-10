@@ -1,0 +1,15 @@
+{
+  "name": "auth-server",
+  "version": "1.0.0",
+  "description": "Auth server built with AWS Lambda and Serverless Framework, integrating with Google Calendar API for secure event management.",
+  "main": "handler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+  "googleapis": "^110.0.0"
+  }
+}
