@@ -60,7 +60,7 @@ export const getEvents = async () => {
 
   if (token) {
     removeQuery(); // Remove query from the URL
-    const url =  'https://h6lktfu534.execute-api.eu-central-1.amazonaws.com/dev/api/get-events' + "/" + token; // Construct the API endpoint using template literals
+    const url = `https://h6lktfu534.execute-api.eu-central-1.amazonaws.com/dev/api/get-events/${token}`; // Construct the API endpoint using template literals
     const response = await fetch(url); // Fetch events from the API
     const result = await response.json(); // Parse the JSON response
     if (result) {
