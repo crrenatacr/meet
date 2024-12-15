@@ -33,9 +33,6 @@ const App = () => {
    * This ensures that the list of events and locations is fetched either on mount or when the user changes the number of events to display.
    */
   useEffect(() => {
-if(!events){
-  fetchData(); // Call fetchData to get the initial set of events and locations
-  }
     fetchData(); // Call fetchData to get the initial set of events and locations
   }, [fetchData]); // Dependency array includes 'fetchData' to avoid the linting warning
 
