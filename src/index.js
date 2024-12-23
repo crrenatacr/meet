@@ -10,10 +10,8 @@ import * as atatus from 'atatus-spa';
 // Configuration for Atatus with API key
 atatus.config('7a4fe861c45e46679cb2c2e88dbb92b6').install();
 
-// Integration test for Atatus
-atatus.notify(new Error('Test Atatus Setup'));
 
-
+// Render the app to the root element
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
