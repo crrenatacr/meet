@@ -34,8 +34,8 @@ const Event = ({ event }) => {
         <div className="event-details">
           <h4>About the event:</h4>
           <p className="event-description">{event.description}</p>
-          <a href={event.htmlLink} target="_blank" rel="noopener noreferrer">
-            See more details
+          <a className="calendar-btn" href={event.htmlLink} target="_blank" rel="noopener noreferrer">
+            Add to Calendar
           </a>
         </div>
       )}
