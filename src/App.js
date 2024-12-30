@@ -3,6 +3,7 @@ import CitySearch from './components/CitySearch'; // Import CitySearch component
 import EventList from './components/EventList'; // Import EventList component
 import NumberOfEvents from './components/NumberOfEvents'; // Import NumberOfEvents component
 import { extractLocations, getEvents } from './api'; // Import the API function to fetch events
+import { InfoAlert } from './components/Alert';
 import './App.css'; // Import the main CSS file for styling
 
 // Main application component
@@ -17,6 +18,9 @@ const App = () => {
   const [allLocations, setAllLocations] = useState([]); // Initially an empty array for all locations
 
   const [selectedLocation, setSelectedLocation] = useState("all");
+
+  
+ const [infoAlert, setInfoAlert] = useState("");
 
   /**
    * Function to fetch events data from the API.
@@ -55,13 +59,16 @@ useEffect(() => {
 
   return (
     <div className="App">
+      <div className="alerts-container">
+       {infoAlert.length ? <InfoAlert text={infoAlert}/> : null}
+      </div>
       {/* Welcome message and instructions for the user */}
-      <h1>Welcome to Meet App</h1>
+      <h1>Welcome to GlobalGigs</h1>
       <p>Find the best events in your city!</p>
       <p>Use the dropdown to select a city and choose how many events you want to see.</p>
 
       {/* Render the CitySearch component, passing allLocations to filter suggestions */}
-      <CitySearch allLocations={allLocations} setSelectedLocation={setSelectedLocation}/>
+      <CitySearch allLocations={allLocations} setSelectedLocation={setSelectedLocation} setInfoAlert={setInfoAlert} />
 
       {/* Render the NumberOfEvents component, passing the current number of events and the setter */}
       <NumberOfEvents currentNOE={currentNOE} setCurrentNOE={setCurrentNOE} />

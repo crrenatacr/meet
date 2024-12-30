@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const CitySearch = ({ allLocations, setSelectedLocation }) => {
+const CitySearch = ({ allLocations, setSelectedLocation, setInfoAlert }) => {
   // Defining state variables: query, suggestions, and showSuggestions
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [query, setQuery] = useState(""); // State for the input field value
@@ -24,6 +24,15 @@ const CitySearch = ({ allLocations, setSelectedLocation }) => {
     setQuery(value); // Update the query state to the current input value
     setSuggestions(filteredLocations); // Update the suggestions state with the filtered locations
     console.log("Updated suggestions:", filteredLocations); // Log filtered suggestions for debugging
+  
+    // Check if no locations match the query
+    let infoText;
+    if (filteredLocations.length === 0) {
+      infoText = "We can not find the city you are looking for. Please try another city";
+    } else {
+      infoText = "";
+    }
+    setInfoAlert(infoText); // Set the info alert message
   };
 
   // Function to handle suggestion item clicks
