@@ -64,7 +64,7 @@ useEffect(() => {
     <div className="App">
       <div className="alerts-container">
        {infoAlert.length ? <InfoAlert text={infoAlert}/> : null}
-       {errorAlert.length ? <ErrorAlert text={ErrorAlert}/> : null}
+       {errorAlert.length ? <ErrorAlert text={errorAlert}/> : null}
       </div>
       {/* Welcome message and instructions for the user */}
       <h1>Welcome to GlobalGigs</h1>
