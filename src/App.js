@@ -5,7 +5,7 @@ import NumberOfEvents from './components/NumberOfEvents'; // Import NumberOfEven
 import { extractLocations, getEvents } from './api'; // Import the API function to fetch events
 import { InfoAlert, ErrorAlert } from './components/Alert'; // Import the subclasses of Alert
 import './App.css'; // Import the main CSS file for styling
-import { set } from 'nprogress';
+
 
 // Main application component
 const App = () => {
