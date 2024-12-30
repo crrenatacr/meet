@@ -3,8 +3,9 @@ import CitySearch from './components/CitySearch'; // Import CitySearch component
 import EventList from './components/EventList'; // Import EventList component
 import NumberOfEvents from './components/NumberOfEvents'; // Import NumberOfEvents component
 import { extractLocations, getEvents } from './api'; // Import the API function to fetch events
-import { InfoAlert } from './components/Alert';
+import { InfoAlert, ErrorAlert } from './components/Alert'; // Import the subclasses of Alert
 import './App.css'; // Import the main CSS file for styling
+import { set } from 'nprogress';
 
 // Main application component
 const App = () => {
@@ -21,6 +22,8 @@ const App = () => {
 
   
  const [infoAlert, setInfoAlert] = useState("");
+
+ const [errorAlert, setErrorAlert] = useState(""); 
 
   /**
    * Function to fetch events data from the API.
@@ -61,6 +64,7 @@ useEffect(() => {
     <div className="App">
       <div className="alerts-container">
        {infoAlert.length ? <InfoAlert text={infoAlert}/> : null}
+       {errorAlert.length ? <ErrorAlert text={ErrorAlert}/> : null}
       </div>
       {/* Welcome message and instructions for the user */}
       <h1>Welcome to GlobalGigs</h1>
@@ -71,7 +75,7 @@ useEffect(() => {
       <CitySearch allLocations={allLocations} setSelectedLocation={setSelectedLocation} setInfoAlert={setInfoAlert} />
 
       {/* Render the NumberOfEvents component, passing the current number of events and the setter */}
-      <NumberOfEvents currentNOE={currentNOE} setCurrentNOE={setCurrentNOE} />
+      <NumberOfEvents currentNOE={currentNOE} setCurrentNOE={setCurrentNOE} setErrorAlert={setErrorAlert} />
 
       {/* Render the EventList component, passing the list of fetched events */}
       <EventList events={events} />
