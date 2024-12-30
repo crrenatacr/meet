@@ -41,6 +41,7 @@ const CitySearch = ({ allLocations, setSelectedLocation, setInfoAlert }) => {
     setQuery(value); // Set the query to the clicked suggestion
     setShowSuggestions(false); // Hide the suggestions list
     setSelectedLocation(value === "See all cities" ? "all" : value);
+    setInfoAlert(""); // Clear the info alert message
   };
 
   return (
