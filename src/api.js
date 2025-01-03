@@ -1,3 +1,6 @@
+import mockData from './mock-data';
+import NProgress from 'nprogress';
+
 /**
  *
  * @param {*} events:
@@ -6,9 +9,6 @@
  * It will also remove all duplicates by creating another new array using the spread operator and spreading a Set.
  * The Set will remove all duplicates from the array.
  */
-
-import mockData from './mock-data';
-import NProgress from 'nprogress';
 
 // This function retrieves the access token from localStorage and checks if it's valid
 export const getAccessToken = async () => {
@@ -63,9 +63,15 @@ export const getEvents = async () => {
     const url = `https://h6lktfu534.execute-api.eu-central-1.amazonaws.com/dev/api/get-events/${token}`; // Construct the API endpoint using template literals
     const response = await fetch(url); // Fetch events from the API
     const result = await response.json(); // Parse the JSON response
+    
     if (result) {
-      return result; // Return events from the result
-    } else return null;
+      NProgress.done();
+      localStorage.setItem("lastEvents", JSON.stringify(result.events)); // Save events to localStorage for offline use
+      return result.events; // Return events from the result
+    } else {
+      NProgress.done();
+      return null;
+    }
   }
 };
 
