@@ -3,7 +3,7 @@ import CitySearch from './components/CitySearch'; // Import CitySearch component
 import EventList from './components/EventList'; // Import EventList component
 import NumberOfEvents from './components/NumberOfEvents'; // Import NumberOfEvents component
 import { extractLocations, getEvents } from './api'; // Import the API function to fetch events
-import { InfoAlert, ErrorAlert } from './components/Alert'; // Import the subclasses of Alert
+import { InfoAlert, ErrorAlert, WarningAlert } from './components/Alert'; // Import the subclasses of Alert
 import './App.css'; // Import the main CSS file for styling
 
 
@@ -24,6 +24,8 @@ const App = () => {
  const [infoAlert, setInfoAlert] = useState("");
 
  const [errorAlert, setErrorAlert] = useState(""); 
+
+ const [WarningAlert, setWarningAlert] = useState("");
 
   /**
    * Function to fetch events data from the API.
@@ -57,7 +59,14 @@ const App = () => {
 };
 
 useEffect(() => {
-    updateEvents(selectedLocation, currentNOE);
+   // Check if the user is online or offline
+   if (navigator.onLine) {
+    setWarningAlert(""); // Set the warning alert message to an empty string if online
+  } else {
+    setWarningAlert("You are currently offline. Event list may not be up-to-date."); // Set a non-empty warning message if offline
+  }
+  
+    updateEvents(selectedLocation, currentNOE); // Update events whenever the selected location or number of events changes
 }, [selectedLocation, currentNOE]);
 
   return (
@@ -65,6 +74,7 @@ useEffect(() => {
       <div className="alerts-container">
        {infoAlert.length ? <InfoAlert text={infoAlert}/> : null}
        {errorAlert.length ? <ErrorAlert text={errorAlert}/> : null}
+       {WarningAlert.length ? <WarningAlert text={WarningAlert}/> : null}
       </div>
       {/* Welcome message and instructions for the user */}
       <h1>Welcome to GlobalGigs</h1>
