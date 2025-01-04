@@ -4,6 +4,7 @@ import EventList from './components/EventList'; // Import EventList component
 import NumberOfEvents from './components/NumberOfEvents'; // Import NumberOfEvents component
 import { extractLocations, getEvents } from './api'; // Import the API function to fetch events
 import { InfoAlert, ErrorAlert, WarningAlert } from './components/Alert'; // Import the subclasses of Alert
+import CityEventsChart from './components/CityEventsChart';
 import './App.css'; // Import the main CSS file for styling
 
 
