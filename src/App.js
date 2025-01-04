@@ -71,21 +71,25 @@ useEffect(() => {
 
   return (
     <div className="App">
+      {/* Welcome message and instructions for the user */}
+      <h1>Welcome to GlobalGigs</h1>
+      <p>Find the best events in your city!</p>
+      <p>Use the dropdown to select a city and choose how many events you want to see.</p>
       <div className="alerts-container">
        {infoAlert.length ? <InfoAlert text={infoAlert}/> : null}
        {errorAlert.length ? <ErrorAlert text={errorAlert}/> : null}
        {WarningAlert.length ? <WarningAlert text={WarningAlert}/> : null}
       </div>
-      {/* Welcome message and instructions for the user */}
-      <h1>Welcome to GlobalGigs</h1>
-      <p>Find the best events in your city!</p>
-      <p>Use the dropdown to select a city and choose how many events you want to see.</p>
-
+      
       {/* Render the CitySearch component, passing allLocations to filter suggestions */}
       <CitySearch allLocations={allLocations} setSelectedLocation={setSelectedLocation} setInfoAlert={setInfoAlert} />
 
       {/* Render the NumberOfEvents component, passing the current number of events and the setter */}
       <NumberOfEvents currentNOE={currentNOE} setCurrentNOE={setCurrentNOE} setErrorAlert={setErrorAlert} />
+
+      <div className="charts-container">
+        <CityEventsChart allLocations={allLocations} events={events} />
+      </div>
 
       {/* Render the EventList component, passing the list of fetched events */}
       <EventList events={events} />
