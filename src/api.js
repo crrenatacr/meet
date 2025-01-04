@@ -66,8 +66,8 @@ export const getEvents = async () => {
     
     if (result) {
       NProgress.done();
-      localStorage.setItem("lastEvents", JSON.stringify(result)); // Save events to localStorage for offline use
-      return result; // Return events from the result
+      localStorage.setItem("lastEvents", JSON.stringify(result.events)); // Save events to localStorage for offline use
+      return result.events; // Return events from the result
     } else {
       NProgress.done();
       return null;
