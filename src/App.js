@@ -4,7 +4,6 @@ import EventList from './components/EventList'; // Import EventList component
 import NumberOfEvents from './components/NumberOfEvents'; // Import NumberOfEvents component
 import { extractLocations, getEvents } from './api'; // Import the API function to fetch events
 import { InfoAlert, ErrorAlert, WarningAlert } from './components/Alert'; // Import the subclasses of Alert
-import CityEventsChart from './components/CityEventsChart';
 import './App.css'; // Import the main CSS file for styling
 
 
@@ -26,7 +25,7 @@ const App = () => {
 
  const [errorAlert, setErrorAlert] = useState(""); 
 
- const [WarningAlert, setWarningAlert] = useState("");
+const [warningAlert, setWarningAlert] = useState("");
 
   /**
    * Function to fetch events data from the API.
@@ -79,7 +78,7 @@ useEffect(() => {
       <div className="alerts-container">
        {infoAlert.length ? <InfoAlert text={infoAlert}/> : null}
        {errorAlert.length ? <ErrorAlert text={errorAlert}/> : null}
-       {WarningAlert.length ? <WarningAlert text={WarningAlert}/> : null}
+       {warningAlert.length ? <WarningAlert text={warningAlert}/> : null}
       </div>
       
       {/* Render the CitySearch component, passing allLocations to filter suggestions */}
@@ -87,10 +86,6 @@ useEffect(() => {
 
       {/* Render the NumberOfEvents component, passing the current number of events and the setter */}
       <NumberOfEvents currentNOE={currentNOE} setCurrentNOE={setCurrentNOE} setErrorAlert={setErrorAlert} />
-
-      <div className="charts-container">
-        <CityEventsChart allLocations={allLocations} events={events} />
-      </div>
 
       {/* Render the EventList component, passing the list of fetched events */}
       <EventList events={events} />
