@@ -32,9 +32,17 @@ const [warningAlert, setWarningAlert] = useState("");
    * This function will fetch all events and then set the events to display based on currentNOE.
    */
   const fetchData = useCallback(async () => {
-    const allEvents = await getEvents(); // Fetch all events from the API
-    setEvents(allEvents.slice(0, currentNOE)); // Set the events to display based on currentNOE
-    setAllLocations(extractLocations(allEvents)); // Extract and set all locations from the fetched events
+    try {
+      const allEvents = await getEvents(); // Fetch all events from the API
+      if (Array.isArray(allEvents)) { // Check if allEvents is a valid array
+        setEvents(allEvents.slice(0, currentNOE)); // Set the events to display based on currentNOE
+        setAllLocations(extractLocations(allEvents)); // Extract and set all locations from the fetched events
+      } else {
+        setErrorAlert("Failed to load events."); // Set an error alert if the events data is invalid
+      }
+    } catch (error) {
+      setErrorAlert(`Error fetching events: ${error.message}`); // Handle any errors from the fetch
+    }
   }, [currentNOE]); // The function depends on 'currentNOE', so it will re-run when it changes
 
   /**
@@ -47,6 +55,7 @@ const [warningAlert, setWarningAlert] = useState("");
 
   const updateEvents = (location, inputNumber) => {
     getEvents().then((events) => {
+     if (Array.isArray(events)) { // Check if events is a valid array
         const locationEvents =
             location === "all"
                 ? events
@@ -55,6 +64,11 @@ const [warningAlert, setWarningAlert] = useState("");
         setEvents(eventsToShow);
         setSelectedLocation(location);
         setCurrentNOE(inputNumber);
+      } else {
+        setErrorAlert("Failed to load events."); // Handle error if events is invalid
+      }
+    }).catch((error) => {
+      setErrorAlert(`Error fetching events: ${error.message}`); // Catch and display error message
     });
 };
 
