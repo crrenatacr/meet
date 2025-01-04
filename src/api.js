@@ -63,7 +63,7 @@ export const getEvents = async () => {
     const url = `https://h6lktfu534.execute-api.eu-central-1.amazonaws.com/dev/api/get-events/${token}`; // Construct the API endpoint using template literals
     const response = await fetch(url); // Fetch events from the API
     const result = await response.json(); // Parse the JSON response
-    
+    console.log(result)
     if (result) {
       NProgress.done();
       localStorage.setItem("lastEvents", JSON.stringify(result)); // Save events to localStorage for offline use
