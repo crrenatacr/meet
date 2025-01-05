@@ -1,17 +1,17 @@
-import { useEffect, useState, useCallback } from 'react'; // Import React hooks
-import CitySearch from './components/CitySearch'; // Import CitySearch component
-import EventList from './components/EventList'; // Import EventList component
-import NumberOfEvents from './components/NumberOfEvents'; // Import NumberOfEvents component
-import { extractLocations, getEvents } from './api'; // Import the API function to fetch events
-import { InfoAlert, ErrorAlert, WarningAlert } from './components/Alert'; // Import the subclasses of Alert
-import './App.css'; // Import the main CSS file for styling
-
+import { useEffect, useState, useCallback } from "react"; // Import React hooks
+import CitySearch from "./components/CitySearch"; // Import CitySearch component
+import EventList from "./components/EventList"; // Import EventList component
+import NumberOfEvents from "./components/NumberOfEvents"; // Import NumberOfEvents component
+import { extractLocations, getEvents } from "./api"; // Import the API function to fetch events
+import { InfoAlert, ErrorAlert, WarningAlert } from "./components/Alert"; // Import the subclasses of Alert
+import CityEventsChart from "./components/CityEventsChart"; // Import the CityEventsChart component
+import "./App.css"; // Import the main CSS file for styling
 
 // Main application component
 const App = () => {
   // State to store the list of events fetched from the API
   const [events, setEvents] = useState([]); // Initially an empty array of events
-  
+
   // State to store the current number of events to display, default is 32
   const [currentNOE, setCurrentNOE] = useState(32); // Default number of events to show is 32
 
@@ -20,12 +20,11 @@ const App = () => {
 
   const [selectedLocation, setSelectedLocation] = useState("all");
 
-  
- const [infoAlert, setInfoAlert] = useState("");
+  const [infoAlert, setInfoAlert] = useState("");
 
- const [errorAlert, setErrorAlert] = useState(""); 
+  const [errorAlert, setErrorAlert] = useState("");
 
-const [warningAlert, setWarningAlert] = useState("");
+  const [warningAlert, setWarningAlert] = useState("");
 
   /**
    * Function to fetch events data from the API.
@@ -47,45 +46,64 @@ const [warningAlert, setWarningAlert] = useState("");
 
   const updateEvents = (location, inputNumber) => {
     getEvents().then((events) => {
-        const locationEvents =
-            location === "all"
-                ? events
-                : events.filter((event) => event.location === location);
-        const eventsToShow = locationEvents.slice(0, inputNumber);
-        setEvents(eventsToShow);
-        setSelectedLocation(location);
-        setCurrentNOE(inputNumber);
+      const locationEvents =
+        location === "all"
+          ? events
+          : events.filter((event) => event.location === location);
+      const eventsToShow = locationEvents.slice(0, inputNumber);
+      setEvents(eventsToShow);
+      setSelectedLocation(location);
+      setCurrentNOE(inputNumber);
     });
-};
+  };
 
-useEffect(() => {
-   // Check if the user is online or offline
-   if (navigator.onLine) {
-    setWarningAlert(""); // Set the warning alert message to an empty string if online
-  } else {
-    setWarningAlert("You are currently offline. Event list may not be up-to-date."); // Set a non-empty warning message if offline
-  }
-  
+  useEffect(() => {
+    // Check if the user is online or offline
+    if (navigator.onLine) {
+      setWarningAlert(""); // Set the warning alert message to an empty string if online
+    } else {
+      setWarningAlert(
+        "You are currently offline. Event list may not be up-to-date."
+      ); // Set a non-empty warning message if offline
+    }
+
     updateEvents(selectedLocation, currentNOE); // Update events whenever the selected location or number of events changes
-}, [selectedLocation, currentNOE]);
+  }, [selectedLocation, currentNOE]);
 
   return (
     <div className="App">
       {/* Welcome message and instructions for the user */}
       <h1>Welcome to GlobalGigs</h1>
       <p>Find the best events in your city!</p>
-      <p>Use the dropdown to select a city and choose how many events you want to see.</p>
+      <p>
+        Use the dropdown to select a city and choose how many events you want to
+        see.
+      </p>
       <div className="alerts-container">
-       {infoAlert.length ? <InfoAlert text={infoAlert}/> : null}
-       {errorAlert.length ? <ErrorAlert text={errorAlert}/> : null}
-       {warningAlert.length ? <WarningAlert text={warningAlert}/> : null}
+        {infoAlert.length ? <InfoAlert text={infoAlert} /> : null}
+        {errorAlert.length ? <ErrorAlert text={errorAlert} /> : null}
+        {warningAlert.length ? <WarningAlert text={warningAlert} /> : null}
       </div>
-      
+
       {/* Render the CitySearch component, passing allLocations to filter suggestions */}
-      <CitySearch allLocations={allLocations} setSelectedLocation={setSelectedLocation} setInfoAlert={setInfoAlert} />
+      <CitySearch
+        allLocations={allLocations}
+        setSelectedLocation={setSelectedLocation}
+        setInfoAlert={setInfoAlert}
+      />
 
       {/* Render the NumberOfEvents component, passing the current number of events and the setter */}
-      <NumberOfEvents currentNOE={currentNOE} setCurrentNOE={setCurrentNOE} setErrorAlert={setErrorAlert} />
+      <NumberOfEvents
+        currentNOE={currentNOE}
+        setCurrentNOE={setCurrentNOE}
+        setErrorAlert={setErrorAlert}
+      />
+
+      {/* Render the CityEventsChart component, passing allLocations and events */}
+
+      <div className="charts-container">
+        <CityEventsChart allLocations={allLocations} events={events} />
+      </div>
 
       {/* Render the EventList component, passing the list of fetched events */}
       <EventList events={events} />
