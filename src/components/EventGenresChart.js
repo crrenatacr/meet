@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import {
   PieChart,
   Pie,
-  Sector,
   Legend,
   Cell,
   ResponsiveContainer,
@@ -14,6 +13,7 @@ const EventGenresChart = ({ events }) => {
   console.log("data (state):", data);
   const genres = ["React", "JavaScript", "Node", "jQuery", "Angular"];
   console.log("genres:", genres);
+  const colors = ['#DD0000', '#00DD00', '#0000DD', '#DDDD00', '#DD00DD'];
 
   const getData = () => {
     const data = genres.map((genre) => {
@@ -31,10 +31,8 @@ const EventGenresChart = ({ events }) => {
   };
 
   useEffect(() => {
-    const newData = getData();
-    console.log("newData (from useEffect):", newData);
-    setData(newData);
-  }, [`${events}`]);
+		setData(getData());
+	}, [`${events}`]);
 
   const renderCustomizedLabel = ({ 
     cx, 
@@ -72,8 +70,18 @@ const EventGenresChart = ({ events }) => {
           fill="#8884d8"
           labelLine={false}
           label={renderCustomizedLabel}
-          outerRadius={150}           
-        />
+          outerRadius={150}  
+        >
+          {data.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={colors[index]} />
+          ))}
+        </Pie>
+        <Legend
+					align="center"
+					verticalAlign="bottom"
+					layout="vertical"
+					height={2}
+				/>
       </PieChart>
     </ResponsiveContainer>
   );
