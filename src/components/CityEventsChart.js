@@ -9,18 +9,27 @@ import {
 } from 'recharts';
 
 const CityEventsChart = ({ allLocations, events }) => {
+  console.log('allLocations:', allLocations);
+  console.log('events:', events);
+
   const [data, setData] = useState([]);
+  console.log('data (initial state):', data);
 
   useEffect(() => {
-    setData(getData());
+    const newData = getData();
+    console.log('data (useEffect):', newData);
+    setData(newData);
   }, [`${events}`]);
 
   const getData = () => {
     const data = allLocations.map((location) => {
-      const count = events.filter((event) => event.location === location).length
-      const city = location.split((/, | - /))[0]
+      const count = events.filter((event) => event.location === location).length;
+      console.log('location:', location, 'count:', count);
+      const city = location.split((/, | - /))[0];
+      console.log('city:', city);
       return { city, count };
-    })
+    });
+    console.log('getData result:', data);
     return data;
   };
 
