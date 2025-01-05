@@ -102,5 +102,12 @@ input[type="number"] {
  }
 
  .charts-container {
-  grid-template-columns: 1fr 1fr
- }
+  grid-template-columns: 1fr 1fr;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+  .charts-container {
+    grid-template-columns: 1fr; /* One item per column */
+  }
+}

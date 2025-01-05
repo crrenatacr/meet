@@ -4,6 +4,7 @@ import EventList from "./components/EventList"; // Import EventList component
 import NumberOfEvents from "./components/NumberOfEvents"; // Import NumberOfEvents component
 import { extractLocations, getEvents } from "./api"; // Import the API function to fetch events
 import { InfoAlert, ErrorAlert, WarningAlert } from "./components/Alert"; // Import the subclasses of Alert
+import EventGenresChart from "./components/CityEventsChart"; // Import the EventGenresChart component
 import CityEventsChart from "./components/CityEventsChart"; // Import the CityEventsChart component
 import "./App.css"; // Import the main CSS file for styling
 
@@ -102,6 +103,7 @@ const App = () => {
       {/* Render the CityEventsChart component, passing allLocations and events */}
 
       <div className="charts-container">
+        <EventGenresChart events={events} />
         <CityEventsChart allLocations={allLocations} events={events} />
       </div>
 
