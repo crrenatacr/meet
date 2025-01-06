@@ -8,46 +8,40 @@ import {
 } from "recharts";
 
 const EventGenresChart = ({ events }) => {
-  console.log("events:", events);
   const [data, setData] = useState([]);
-  console.log("data (state):", data);
   const genres = ["React", "JavaScript", "Node", "jQuery", "Angular"];
-  console.log("genres:", genres);
-  const colors = ['#DD0000', '#00DD00', '#0000DD', '#DDDD00', '#DD00DD'];
+  const colors = ["#8884d8", "#82ca9d", "#ffc658", "#ff8042", "#8dd1e1"];
 
-  const getData = () => {
+
+   const getData = () => {
     const data = genres.map((genre) => {
       const filteredEvents = events.filter((event) =>
         event.summary.includes(genre)
       );
-      console.log("filteredEvents for genre", genre, ":", filteredEvents);
       return {
         name: genre,
         value: filteredEvents.length,
       };
     });
-    console.log("data (from getData):", data);
     return data;
   };
 
   useEffect(() => {
-		setData(getData());
-	}, [`${events}`]);
+    setData(getData());
+  }, [`${events}`]);
 
   const renderCustomizedLabel = ({ 
     cx, 
     cy, 
     midAngle,
-    outerRadius,
-    percent,
-    index
-  }) => {
-    console.log("renderCustomizedLabel params:", { cx, cy, midAngle, outerRadius, percent, index });
+     outerRadius,
+      percent,
+       index
+     }) => {
     const RADIAN = Math.PI / 180;
     const radius = outerRadius;
     const x = cx + radius * Math.cos(-midAngle * RADIAN) * 1.07;
     const y = cy + radius * Math.sin(-midAngle * RADIAN) * 1.07;
-    console.log("x:", x, "y:", y);
     return percent ? (
       <text
         x={x}
@@ -79,7 +73,7 @@ const EventGenresChart = ({ events }) => {
         <Legend
 					align="center"
 					verticalAlign="bottom"
-					layout="vertical"
+					layout="horizontal"
 					height={2}
 				/>
       </PieChart>
