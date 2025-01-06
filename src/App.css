@@ -102,7 +102,11 @@ input[type="number"] {
  }
 
  .charts-container {
+  display: grid;
   grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  justify-items: center;
+  align-items: center;
 }
 
 /* Media query for smaller screens */
